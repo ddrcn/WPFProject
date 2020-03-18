@@ -1,0 +1,463 @@
+﻿<Page x:Class="MyKDZ.View.GameProcessView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:MyKDZ.View"
+      mc:Ignorable="d" 
+      xmlns:gif="http://wpfanimatedgif.codeplex.com"
+     xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
+       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      xmlns:myviewmodel="clr-namespace:MyKDZ.ViewModel"
+      xmlns:model="clr-namespace:MyKDZ.Model"
+      xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+       d:DataContext="{d:DesignInstance Type=myviewmodel:MainWindowViewModel}"
+      d:DesignHeight="362" d:DesignWidth="720"
+      FocusManager.FocusedElement="{Binding ElementName=LogList}"
+      Title="GameProcessView" Loaded="Page_Loaded">
+
+
+
+    <Page.InputBindings>
+        <KeyBinding Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Attack" Key="Q"/>
+        <KeyBinding Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Block" Key="W"/>
+        <KeyBinding Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Run" Key="E"/>
+        <KeyBinding Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Run" Key="I"/>
+        <KeyBinding Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Block" Key="O"/>
+        <KeyBinding Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" CommandParameter="Attack" Key="P"/>
+        <KeyBinding Command="{Binding CancelUser1Move}" Key="F"/>
+        <KeyBinding Command="{Binding CancelUser2Move}" Key="J"/>
+        <KeyBinding Command="{Binding NextMove}" Key="Space"/>
+    </Page.InputBindings>
+
+
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <ResourceDictionary>
+                    <model:BoolToVisibilityConverter x:Key="enemyIsHumanConverter"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+
+        </ResourceDictionary>
+    </Page.Resources>
+
+
+   
+
+        <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+
+
+
+        <Grid Grid.Column="0" Margin="0" Height="auto" Width="auto">
+
+            <StackPanel Orientation="Vertical">
+
+               
+                <materialDesign:Flipper
+  Style="{DynamicResource FlipperHero}" VerticalAlignment="Top" HorizontalAlignment="Left"  Margin="10,10,0,0" Height="800" MaxWidth="350" >
+
+                    <materialDesign:Flipper.FrontContent>
+
+                        <Grid
+      Height="1000"
+      MinWidth="280" Width="auto"
+                            >
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+          Height="160" />
+                                <RowDefinition
+          Height="2*" />
+                                <RowDefinition
+           />
+                            </Grid.RowDefinitions>
+                            <materialDesign:ColorZone
+        Mode="PrimaryLight"
+        VerticalAlignment="Stretch" Grid.Row="0"
+                                Background="{x:Null}">
+                                <Image gif:ImageBehavior.AnimatedSource="{Binding SelectedHeroUser1.AvatarPath}" Margin="0,6,0,20" Stretch="Fill"/>
+                            </materialDesign:ColorZone>
+                            <Grid Grid.Row="1" Margin="0 0 0 10">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" FontWeight="Bold" Text="ИГРОК :" Margin="20 10 0 0" FontSize="17"/>
+                                        <TextBlock Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="Bold" Foreground="Orange" Margin="130 8 0 0" Text="{Binding UserName1}" MaxHeight="50"  MaxWidth="120" TextWrapping="WrapWithOverflow" FontSize="17"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" FontWeight="Bold" Text="HERO :" Margin="20 10 0 0" FontSize="17"/>
+                                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" FontWeight="ExtraBold" Foreground="OrangeRed" Margin="142 0 20 0" Text="{Binding SelectedHeroUser1.Name}" MaxHeight="50"  MaxWidth="120" TextWrapping="WrapWithOverflow" FontSize="17"/>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" Margin="5,0,65,0" >
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="TYPE" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASESTR" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEAGI" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEINT" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MOVESPEED" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEARMOR" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MINDMG" FontSize="16"/>
+                                            <TextBlock Padding="20 0 0 0" Width="140" Style="{DynamicResource TextBlockStyle}" Text="REGENERATION" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MAXHEALTH" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="HEALTH" FontSize="16"/>
+
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0">
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.Type}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.BaseStr}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.BaseAgi}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.BaseInt}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.MoveSpeed}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.BaseArmor}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.MinDmg}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.Regeneration}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.MaxHealth, StringFormat={}{0:f2}}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser1.Health, StringFormat={}{0:f2}}" FontSize="16"/>
+
+                                        </StackPanel>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                                        <Label HorizontalAlignment="Center" Foreground="{DynamicResource MaterialDesignTextBoxBorder}" Margin="20 20 15 0" FontSize="16">Состояние хода:</Label>
+                                        <ToggleButton Margin="10 0 0 0" x:Name="moveStatus"
+  Style="{StaticResource MaterialDesignActionAccentToggleButton}" Background="Red"
+                                                 Visibility="{Binding Path=IsUser1MoveNot, UpdateSourceTrigger=PropertyChanged}"
+           Width="80" Height="80"                                   
+  ToolTip="Статус хода" >
+                                            <ToggleButton.Content>
+                                                <materialDesign:PackIcon
+      Kind="Sleep" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+                                            </ToggleButton.Content>
+                                            <materialDesign:ToggleButtonAssist.OnContent>
+                                                <materialDesign:PackIcon
+      Kind="Sleep" Width="40" Height="40" />
+                                            </materialDesign:ToggleButtonAssist.OnContent>
+                                        </ToggleButton>
+
+                                        <ToggleButton Margin="10 0 0 0" 
+  Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                                      
+                                                 Visibility="{Binding Path=IsUser1MoveYes, UpdateSourceTrigger=PropertyChanged}"
+           Width="80" Height="80"      Command="{Binding CancelUser1Move}"                             
+  ToolTip="Отмена выбранного действия (F)">
+                                            <ToggleButton.Content>
+                                                
+                                                <materialDesign:PackIcon
+      Kind="DoneOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+                                            </ToggleButton.Content>
+                                            <materialDesign:ToggleButtonAssist.OnContent>
+                                                <materialDesign:PackIcon
+      Kind="DoneOutline" Width="40" Height="40" />
+                                            </materialDesign:ToggleButtonAssist.OnContent>
+                                        </ToggleButton>
+
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="10 20 0 0">
+
+                                        <Label Style="{DynamicResource MaterialDesignLabel}" VerticalAlignment="Center" Content="Уровень здоровья:"/>
+                                        <ProgressBar x:Name="XP1" VerticalAlignment="Center" Margin="5 0 0 0" Style="{DynamicResource MaterialDesignLinearProgressBar}" Foreground="{DynamicResource SecondaryAccentBrush}"
+                                                Value="{Binding SelectedHeroUser1.Health,UpdateSourceTrigger=PropertyChanged}"
+                                        Maximum="{Binding SelectedHeroUser1.MaxHealth,UpdateSourceTrigger=PropertyChanged}"
+                                                 Width="170"
+                                                Height="20"  />
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </Grid>
+
+
+                        </Grid>
+                    </materialDesign:Flipper.FrontContent>
+
+                </materialDesign:Flipper>
+
+
+                <StackPanel Margin="40 0 0 0" Orientation="Horizontal">
+                    <materialDesign:Badged  Margin="30 30 0 0" Padding="0 -5 -10 0"
+  Badge="Q"
+  BadgeColorZoneMode="Accent">
+                        <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}" 
+                        Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Attack"
+                       
+  ToolTip="Атаковать (Q)">
+                            <materialDesign:PackIcon
+    Kind="SwordCross"
+    Height="24"
+    Width="24" />
+                        </Button>
+                    </materialDesign:Badged>
+
+                    <materialDesign:Badged  Margin="30 30 0 0" Padding="0 -5 -10 0"
+  Badge="W"
+  BadgeColorZoneMode="Accent">
+                        <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Block"
+                        
+  ToolTip="Защищаться (W)">
+                        <materialDesign:PackIcon
+    Kind="ShieldHalfFull"
+    Height="24"
+    Width="24" />
+                    </Button>
+                    </materialDesign:Badged>
+                    <materialDesign:Badged  Margin="30 30 0 0" Padding="0 -5 -10 0"
+  Badge="E"
+  BadgeColorZoneMode="Accent">
+                            <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding Path=User1Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Run"
+                        
+  ToolTip="Убежать (E)">
+                        <materialDesign:PackIcon
+    Kind="Run"
+    Height="24"
+    Width="24" />
+                    </Button>
+                    </materialDesign:Badged>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+
+        <Grid  Grid.Column="1">
+
+            <StackPanel Orientation="Vertical" MinHeight="200" Margin="0 10 0 0" Height="auto">
+                <Border Height="800" Background="{DynamicResource MaterialDesignBackground}" Opacity="0.7">
+                    <ListView x:Name="LogList"  Foreground="{DynamicResource MaterialDesignBody}"  ItemsSource="{Binding Logs, UpdateSourceTrigger=PropertyChanged}" HorizontalContentAlignment="Left" SelectionMode="Single" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" Margin="0 0 0 15"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </Border>
+
+
+
+
+
+
+            </StackPanel>
+            <Button  VerticalAlignment="Bottom" IsDefault="True" 
+    Style="{StaticResource MaterialDesignRaisedAccentButton}"
+    Height="100" ToolTip="Срабатывает по нажатию на пробел"
+                    Command="{Binding NextMove}"
+                    Visibility="{Binding EnemyTypeIsHuman, Converter={StaticResource enemyIsHumanConverter},Mode=OneWay}"
+    materialDesign:ButtonAssist.CornerRadius="25 25 0 0"
+    >
+                <TextBlock
+      Text="Сделать ход!" />
+            </Button>
+        </Grid>
+
+        <Grid Grid.Column="2">
+            <StackPanel Orientation="Vertical">
+                <materialDesign:Flipper
+  Style="{DynamicResource FlipperHero}" VerticalAlignment="Top" HorizontalAlignment="Right"  Margin="0,10,10,0" Height="800" MaxWidth="350" >
+
+                    <materialDesign:Flipper.FrontContent>
+
+                        <Grid
+      Height="1000"
+      MinWidth="280" Width="auto"
+                            >
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition
+          Height="160" />
+                                <RowDefinition
+          Height="2*" />
+                                <RowDefinition
+           />
+                            </Grid.RowDefinitions>
+                            <materialDesign:ColorZone
+        Mode="PrimaryLight"
+        VerticalAlignment="Stretch" Grid.Row="0"
+                                Background="{x:Null}">
+                                <Image gif:ImageBehavior.AnimatedSource="{Binding SelectedHeroUser2.AvatarPath}" Margin="0,6,0,20" Stretch="Fill"/>
+                            </materialDesign:ColorZone>
+                            <Grid Grid.Row="1" Margin="0 0 0 10">
+                                <StackPanel Orientation="Vertical">
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" FontWeight="Bold" Text="ИГРОК :" Margin="20 10 0 0" FontSize="17"/>
+                                        <TextBlock Style="{DynamicResource MaterialDesignSubtitle1TextBlock}" FontWeight="Bold" Foreground="Orange" Margin="130 8 0 0" Text="{Binding UserName2}" MaxHeight="50"  MaxWidth="120" TextWrapping="WrapWithOverflow" FontSize="17"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0 0 0 15">
+
+                                        <TextBlock Style="{DynamicResource TextBlockStyle}" FontWeight="Bold" Text="HERO :" Margin="20 10 0 0" FontSize="17"/>
+                                        <TextBlock Style="{DynamicResource MaterialDesignTextBlock}" FontWeight="ExtraBold" Foreground="OrangeRed" Margin="142 0 20 0" Text="{Binding SelectedHeroUser2.Name}" MaxHeight="50"  MaxWidth="120" TextWrapping="WrapWithOverflow" FontSize="17"/>
+
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel Orientation="Vertical" Margin="5,0,65,0" >
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="TYPE" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASESTR" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEAGI" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEINT" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MOVESPEED" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="BASEARMOR" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MINDMG" FontSize="16"/>
+                                            <TextBlock Padding="20 0 0 0" Width="140" Style="{DynamicResource TextBlockStyle}" Text="REGENERATION" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="MAXHEALTH" FontSize="16"/>
+                                            <TextBlock Width="100" Style="{DynamicResource TextBlockStyle}" Text="HEALTH" FontSize="16"/>
+
+                                        </StackPanel>
+                                        <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0">
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.Type}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.BaseStr}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.BaseAgi}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.BaseInt}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.MoveSpeed}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.BaseArmor}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.MinDmg}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.Regeneration}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.MaxHealth, StringFormat={}{0:f2}}" FontSize="16"/>
+                                            <TextBlock HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Text="{Binding SelectedHeroUser2.Health, StringFormat={}{0:f2}}" FontSize="16"/>
+
+                                        </StackPanel>
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="0 20 0 0">
+                                        <Label HorizontalAlignment="Center" Foreground="{DynamicResource MaterialDesignTextBoxBorder}" Margin="20 20 15 0" FontSize="16">Состояние хода:</Label>
+                                        <ToggleButton Margin="10 0 0 0" x:Name="moveStatus2"
+  Style="{StaticResource MaterialDesignActionAccentToggleButton}" Background="Red"
+                                                 Visibility="{Binding Path=IsUser2MoveNot,UpdateSourceTrigger=PropertyChanged}"
+           Width="80" Height="80"                                   
+  ToolTip="Статус хода" >
+                                            <ToggleButton.Content>
+                                                <materialDesign:PackIcon
+      Kind="Sleep" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+                                            </ToggleButton.Content>
+                                            <materialDesign:ToggleButtonAssist.OnContent>
+                                                <materialDesign:PackIcon
+      Kind="Sleep" Width="40" Height="40" />
+                                            </materialDesign:ToggleButtonAssist.OnContent>
+                                        </ToggleButton>
+
+                                        <ToggleButton Margin="10 0 0 0"  
+  Style="{StaticResource MaterialDesignActionAccentToggleButton}"
+                                   Command="{Binding CancelUser2Move}"    
+                              Visibility="{Binding Path=IsUser2MoveYes,UpdateSourceTrigger=PropertyChanged}"
+           Width="80" Height="80"                                   
+  ToolTip="Отмена действия человека (J)">
+                                            <ToggleButton.Content>
+                                                <materialDesign:PackIcon
+      Kind="DoneOutline" VerticalAlignment="Center" HorizontalAlignment="Center" Width="40" Height="40"/>
+                                            </ToggleButton.Content>
+                                            <materialDesign:ToggleButtonAssist.OnContent>
+                                                <materialDesign:PackIcon
+      Kind="DoneOutline" Width="40" Height="40" />
+                                            </materialDesign:ToggleButtonAssist.OnContent>
+                                        </ToggleButton>
+
+                                    </StackPanel>
+
+                                    <StackPanel Orientation="Horizontal" Margin="10 20 0 0">
+
+                                        <Label Style="{DynamicResource MaterialDesignLabel}" VerticalAlignment="Center" Content="Уровень здоровья:"/>
+                                        <ProgressBar x:Name="XP2" VerticalAlignment="Center" Margin="5 0 0 0" Style="{DynamicResource MaterialDesignLinearProgressBar}" Foreground="{DynamicResource SecondaryAccentBrush}"
+                                                Value="{Binding SelectedHeroUser2.Health,UpdateSourceTrigger=PropertyChanged}"
+                                        Maximum="{Binding SelectedHeroUser2.MaxHealth,UpdateSourceTrigger=PropertyChanged}"
+                                                 Width="170"
+                                                Height="20"  />
+
+                                    </StackPanel>
+
+
+                                </StackPanel>
+                            </Grid>
+
+
+                        </Grid>
+                    </materialDesign:Flipper.FrontContent>
+
+                </materialDesign:Flipper>
+
+
+                <StackPanel Grid.Row="2" Margin="0 0 35 0" Orientation="Horizontal" HorizontalAlignment="Right">
+
+                    <materialDesign:Badged  Margin="0 30 30 0" Padding="0 -5 -10 0"
+  Badge="I"
+  BadgeColorZoneMode="Accent">
+                        <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Run"
+                        
+  ToolTip="Убежать (I)">
+                            <materialDesign:PackIcon
+    Kind="Run"
+    Height="24"
+    Width="24" />
+                        </Button>
+                    </materialDesign:Badged>
+
+                    <materialDesign:Badged  Margin="0 30 30 0" Padding="0 -5 -10 0"
+  Badge="O"
+  BadgeColorZoneMode="Accent">
+                        <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}"
+                        Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Block"
+                        
+  ToolTip="Защищаться (O)">
+                            <materialDesign:PackIcon
+    Kind="ShieldHalfFull"
+    Height="24"
+    Width="24" />
+                        </Button>
+                    </materialDesign:Badged>
+
+
+                    <materialDesign:Badged  Margin="0 30 30 0" Padding="0 -5 -10 0"
+  Badge="P"
+  BadgeColorZoneMode="Accent">
+                        <Button
+  Style="{StaticResource MaterialDesignFloatingActionButton}" 
+                        Command="{Binding Path=User2Move,UpdateSourceTrigger=PropertyChanged}" 
+                        CommandParameter="Attack"
+                       
+  ToolTip="Атаковать (P)">
+                            <materialDesign:PackIcon
+    Kind="SwordCross"
+    Height="24"
+    Width="24" />
+                        </Button>
+                    </materialDesign:Badged>
+                </StackPanel>
+
+            </StackPanel>
+
+        </Grid>
+
+    </Grid>
+    
+</Page>

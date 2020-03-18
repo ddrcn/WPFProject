@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29519.181
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyKDZ", "MyKDZ\MyKDZ.csproj", "{942CB783-2C3E-4383-9D85-BB51E5794778}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameDataLibrary", "GameDataLibrary\GameDataLibrary.csproj", "{457ADADC-3410-444D-B154-72390594C12D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{942CB783-2C3E-4383-9D85-BB51E5794778}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{942CB783-2C3E-4383-9D85-BB51E5794778}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{942CB783-2C3E-4383-9D85-BB51E5794778}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{942CB783-2C3E-4383-9D85-BB51E5794778}.Release|Any CPU.Build.0 = Release|Any CPU
+		{457ADADC-3410-444D-B154-72390594C12D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{457ADADC-3410-444D-B154-72390594C12D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{457ADADC-3410-444D-B154-72390594C12D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{457ADADC-3410-444D-B154-72390594C12D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C477A7E1-0FBD-4B78-9509-ADEA7A745087}
+	EndGlobalSection
+EndGlobal
